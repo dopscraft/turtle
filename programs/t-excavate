@@ -1,4 +1,4 @@
-os.loadAPI("nav")
+os.loadAPI("turtle/apis/nav")
 local turtleNav = nav.Nav()
 
 turtle.refuel()
