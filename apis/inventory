@@ -1,0 +1,52 @@
+Inventory = {}
+Inventory.__index = Inventory
+
+setmetatable(Inventory, {
+    __call = function (cls, ...)
+        return cls.new(...)
+    end,
+})
+
+function Inventory.new()
+    local self = setmetatable({}, Inventory)
+    return self
+end
+
+function Inventory:hasEmptySlots()
+    for slot = 1, 16, 1 do
+        if turtle.getItemSpace(slot) == 64 then
+            return true
+        end
+    end
+    return false
+end
+
+function Inventory:compare(slot, direction)
+    local result = false
+    turtle.select(slot)
+    if direction == 1 then
+        result = turtle.compareUp()
+    elseif direction == 0 then
+        result = turtle.compare()
+    else
+        result = turtle.compareDown()
+    end
+    return result
+end
+
+function Inventory:isSpaceForItem(direction)
+    local current_slot = turtle.getSelectedSlot()
+    if self.hasEmptySlots() then
+        return true
+    end
+    for slot = 1, 16, 1 do
+        if self:compare(slot, direction) then
+            if turtle.getItemSpace(slot) > 0 then
+                turtle.select(current_slot)
+                return true
+            end
+        end
+    end
+    turtle.select(current_slot)
+    return false
+end

@@ -1,5 +1,7 @@
 os.loadAPI("turtle/apis/nav")
+os.loadAPI("turtle/apis/inventory")
 local turtleNav = nav.Nav()
+local turtleInv = inventory.Inventory()
 
 turtle.refuel()
 
@@ -26,19 +28,32 @@ local function work()
     local cur_x = turtleNav:getX()
     local cur_y = turtleNav:getY()
     while (turtle.detect()) do
+        if not turtleInv:isSpaceForItem(0) then
+            write("No space for item\n")
+            return false
+        end
         turtle.dig()
         os.sleep(0.4)
     end
     while (turtle.detectUp()) do
+        if not turtleInv:isSpaceForItem(1) then
+            write("No space for item\n")
+            return false
+        end
         turtle.digUp()
         os.sleep(0.4)
     end
     if (turtle.detectDown()) then
+        if not turtleInv:isSpaceForItem(-1) then
+            write("No space for item\n")
+            return false
+        end
         turtle.digDown()
     end
     if (cur_x % 5 == 0) and (cur_y % 5 == 0) then
         place_torch()
     end
+    return true
 end
 
 local function move()
@@ -80,7 +95,10 @@ local function move()
     end
 end
 
-work()
-while (move()) do
-    work()
+if work() then
+    while (move()) do
+        if not work() then
+            break
+        end
+    end
 end
