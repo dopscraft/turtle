@@ -1,0 +1,106 @@
+Nav = {}
+Nav.__index = Nav
+
+setmetatable(Nav, {
+    __call = function (cls, ...)
+        return cls.new(...)
+    end,
+})
+
+function Nav.new()
+    local self = setmetatable({}, Nav)
+    self.cur_x = 0
+    self.cur_y = 0
+    self.cur_z = 0
+    self.x_change = 1
+    self.y_change = 0
+    return self
+end
+
+function Nav:getX()
+    return self.cur_x
+end
+
+function Nav:getY()
+    return self.cur_y
+end
+
+function Nav:getZ()
+    return self.cur_z
+end
+
+function Nav:up()
+    if turtle.up() then
+        self.cur_z = self.cur_z + 1
+        return true
+    end
+    return false
+end
+
+function Nav:down()
+    if turtle.down() then
+        self.cur_z = self.cur_z - 1
+        return true
+    end
+    return false
+end
+
+function Nav:left()
+    turtle.turnLeft()
+    if self.x_change == 1 then
+        self.x_change = 0
+        self.y_change = 1
+        return true
+    elseif self.y_change == 1 then
+        self.x_change = -1
+        self.y_change = 0
+        return true
+    elseif self.x_change == -1 then
+        self.x_change = 0
+        self.y_change = -1
+        return true
+    else
+        self.x_change = 1
+        self.y_change = 0
+        return true
+    end
+end
+
+function Nav:right()
+    turtle.turnRight()
+    if self.x_change == 1 then
+        self.x_change = 0
+        self.y_change = -1
+        return true
+    elseif self.y_change == 1 then
+        self.x_change = 1
+        self.y_change = 0
+        return true
+    elseif self.x_change == -1 then
+        self.x_change = 0
+        self.y_change = 1
+        return true
+    else
+        self.x_change = -1
+        self.y_change = 0
+        return true
+    end
+end
+
+function Nav:forward()
+    if turtle.forward() then
+        self.cur_x = self.cur_x + self.x_change
+        self.cur_y = self.cur_y + self.y_change
+        return true
+    end
+    return false
+end
+
+function Nav:back()
+    if turtle.back() then
+        self.cur_x = self.cur_x - self.x_change
+        self.cur_y = self.cur_y - self.y_change
+        return true
+    end
+    return false
+end
