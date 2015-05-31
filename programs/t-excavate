@@ -8,10 +8,10 @@ turtle.refuel()
 local torch_location = 2
 
 write("How many rows? :")
-local rows = read()
+local rows = tonumber(read())
 
 write("How many columns (use 0 for no limit)? :")
-local cols = read()
+local cols = tonumber(read())
 
 local next_turn = 0
 
