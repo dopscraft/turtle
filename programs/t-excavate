@@ -18,11 +18,11 @@ local function place_torch()
         place = 1
     end
     turtleNav:up()
-	if place then
-		local current_slot = turtle.getSelectedSlot()
+    if place then
+        local current_slot = turtle.getSelectedSlot()
         turtle.select(torch_location)
         turtle.placeDown()
-		turtle.select(current_slot)
+        turtle.select(current_slot)
     end
 end
 
