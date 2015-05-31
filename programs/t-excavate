@@ -7,8 +7,12 @@ turtle.refuel()
 
 local torch_location = 2
 
-local rows = 30
-local cols = 15
+write("How many rows? :")
+local rows = read()
+
+write("How many columns (use 0 for no limit)? :")
+local cols = read()
+
 local next_turn = 0
 
 local function place_torch()
@@ -63,7 +67,7 @@ local function move()
     local cur_y = turtleNav:getY()
     if (cur_x >= 0 and cur_x < rows) then
         return turtleNav:forward()
-    elseif (cur_y < 0 or cur_y >= cols) then
+    elseif cols and (cur_y < 0 or cur_y >= cols) then
         write("y is "..cur_y.." ending\n")
         return false
     elseif next_turn == 0 then
