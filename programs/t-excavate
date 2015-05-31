@@ -108,3 +108,7 @@ if work() then
         end
     end
 end
+
+if turtle.getFuelLevel() ~= "unlimited" and turtle.getFuelLevel() < 1 then
+    write("Turtle is out of fuel!\n")
+end
