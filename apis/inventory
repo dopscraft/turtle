@@ -50,7 +50,7 @@ end
 
 function Inventory:isSpaceForItem(direction)
     local current_slot = turtle.getSelectedSlot()
-    if self.hasEmptySlots() then
+    if self:hasEmptySlots() then
         return true
     end
     for slot = 1, 16, 1 do
