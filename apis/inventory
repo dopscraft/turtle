@@ -13,11 +13,21 @@ function Inventory.new()
 end
 
 function Inventory:hasEmptySlots()
-    return self.getEmptySlot() ~= nil
+    return self:getEmptySlot() ~= nil
 end
 
-function Inventory:getEmptySlot()
-    for slot = 1, 16, 1 do
+function Inventory:getEmptySlot(after)
+    after = after or 0
+    if (""..after):match("^(%d+)$") ~= ""..after then
+        return nil
+    end
+    
+    after = tonumber(after)
+    if after >= 16 then
+        return nil
+    end
+
+    for slot = after + 1, 16, 1 do
         if turtle.getItemSpace(slot) == 64 then
             return slot
         end
