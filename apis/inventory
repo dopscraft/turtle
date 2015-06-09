@@ -13,12 +13,16 @@ function Inventory.new()
 end
 
 function Inventory:hasEmptySlots()
+    return self.getSlot != nil
+end
+
+function Inventory:getEmptySlot()
     for slot = 1, 16, 1 do
         if turtle.getItemSpace(slot) == 64 then
-            return true
+            return slot
         end
     end
-    return false
+    return nil
 end
 
 function Inventory:compare(slot, direction)
