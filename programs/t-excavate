@@ -5,6 +5,10 @@ local turtleInv = inventory.Inventory()
 
 turtle.refuel()
 
+local fuel_level = turtle.getFuelLevel()
+
+write("Fuel is: "..fuel_level.."\n")
+
 local torch_location = 2
 
 write("How many rows? :")
