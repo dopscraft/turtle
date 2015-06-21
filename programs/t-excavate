@@ -34,9 +34,7 @@ local function place_torch()
     end
 end
 
-local function work()
-    local cur_x = turtleNav:getX()
-    local cur_y = turtleNav:getY()
+local function digForwards()
     while (turtle.detect()) do
         if not turtleInv:isSpaceForItem(0) then
             write("No space for item\n")
@@ -45,6 +43,20 @@ local function work()
         turtle.dig()
         os.sleep(0.4)
     end
+end
+
+local function work()
+    local cur_x = turtleNav:getX()
+    local cur_y = turtleNav:getY()
+
+    if (cur_x >= 0 and cur_x < rows) then
+        digForwards()
+    elseif (cur_x == rows and next_turn ~= 0) then
+        digForwards()
+    elseif (cur_x < 0 and next_turn ~= 3) then
+        digForwards()
+    end
+    
     while (turtle.detectUp()) do
         if not turtleInv:isSpaceForItem(1) then
             write("No space for item\n")
