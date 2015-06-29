@@ -122,14 +122,26 @@ local function move()
     end
 end
 
+local continue_task = true
+
 if work() then
-    while (move()) do
-        if not work() then
-            break
+    while (continue_task) do
+        if ((not move()) or (not work())) then
+            if turtle.getFuelLevel() ~= "unlimited" and turtle.getFuelLevel() < 1 then
+                write("Turtle is out of fuel! Put fuel in slot 1 to continue.\n")
+            end
+            write("Enter 1 to resume:")
+            if (tonumber(read()) ~= 1) then
+                continue_task = false
+            end
+            if turtle.getFuelLevel() ~= "unlimited" and turtle.getFuelLevel() < 1 then
+                local current_slot = turtle.getSelectedSlot()
+                turtle.select(1)
+                turtle.refuel()
+                turtle.select(current_slot)
+            end
+            work()
         end
     end
 end
 
-if turtle.getFuelLevel() ~= "unlimited" and turtle.getFuelLevel() < 1 then
-    write("Turtle is out of fuel!\n")
-end
