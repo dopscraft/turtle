@@ -9,7 +9,8 @@ local fuel_level = turtle.getFuelLevel()
 
 write("Fuel is: "..fuel_level.."\n")
 
-local torch_location = 2
+write("Torch slot number (0 for no torch placement) :")
+local torch_location = tonumber(read())
 
 write("How many rows? :")
 local rows = tonumber(read())
@@ -20,6 +21,10 @@ local cols = tonumber(read())
 local next_turn = 0
 
 local function place_torch()
+    if (torch_location < 1 or torch_location > 16) then
+        return
+    end
+
     turtleNav:down()
     local place = 0
     if turtle.detectDown() then
